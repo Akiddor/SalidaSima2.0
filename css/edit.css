@@ -1,0 +1,234 @@
+:root {
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --accent-color: #feca57;
+    --background-color: #2c3e50;
+    --text-color: #ecf0f1;
+    --font-main: 'Poppins', sans-serif;
+    --font-header: 'Montserrat', sans-serif;
+  }
+  
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap');
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-main);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+  }
+  
+  header {
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .home-icon {
+    color: var(--background-color);
+    font-size: 28px;
+    transition: transform 0.3s ease;
+  }
+  
+  .home-icon:hover {
+    transform: scale(1.2);
+  }
+  
+  h1, h2 {
+    font-family: var(--font-header);
+    margin-bottom: 25px;
+    color: var(--accent-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .section-title {
+    border-bottom: 3px solid var(--secondary-color);
+    padding-bottom: 10px;
+    margin-top: 40px;
+    font-size: 1.8em;
+  }
+  
+  form {
+    margin-bottom: 30px;
+  }
+  
+  button {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .custom-accordion {
+    margin-bottom: 30px;
+  }
+  
+  .custom-accordion-item {
+    border: none;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .custom-accordion-header {
+    background-color: var(--primary-color);
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-accordion-header:hover {
+    background-color: #ff8c8c;
+  }
+  
+  .custom-accordion-header h3 {
+    margin: 0;
+    color: var(--background-color);
+  }
+  
+  .custom-accordion-body {
+    padding: 20px;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .custom-pallet {
+    background-color: rgba(78, 205, 196, 0.1);
+    border: 2px solid var(--secondary-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-pallet:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .pallet-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 20px;
+  }
+  
+  .custom-th, .custom-td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .custom-th {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    font-weight: 600;
+  }
+  
+  .custom-tr {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .custom-tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+  }
+  
+  .btn-select-pallet, .btn-show-add-item {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+  
+  .btn-print-selected {
+    display: block;
+    margin: 30px auto;
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: var(--accent-color);
+  }
+  
+  .no-pallets-message, .no-dates-message {
+    color: var(--secondary-color);
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .pallet-actions {
+      flex-direction: column;
+    }
+  
+    .custom-table {
+      font-size: 14px;
+    }
+  
+    .custom-th, .custom-td {
+      padding: 8px;
+    }
+  
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media print {
+    body {
+      background-color: white;
+      color: black;
+    }
+  
+    header, form, .pallet-actions, .btn-print-selected {
+      display: none;
+    }
+  
+    .custom-accordion-body {
+      display: block !important;
+    }
+  
+    .custom-pallet {
+      page-break-inside: avoid;
+      border: 1px solid #ddd;
+    }
+  
+    .custom-table {
+      border-collapse: collapse;
+    }
+  
+    .custom-th, .custom-td {
+      border: 1px solid #ddd;
+    }
+  }
+  
+  
