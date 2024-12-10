@@ -101,6 +101,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
+    // Asociar eventos a los botones de editar item
+    document.querySelectorAll('.btn-edit-item').forEach(button => {
+        button.addEventListener('click', function () {
+            const itemId = this.getAttribute('data-item-id');
+            const url = `edit_item.php?id=${itemId}`;
+            window.location.href = url;
+        });
+    });
+    
     // Asociar eventos a los botones de eliminar folio
     document.querySelectorAll('.btn-delete-folio').forEach(button => {
         button.addEventListener('click', function () {
@@ -127,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
+4
 
 
 function showNotification(message, type) {
