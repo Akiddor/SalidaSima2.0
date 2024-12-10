@@ -72,8 +72,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.btn-show-add-item').forEach(button => {
         button.addEventListener('click', function () {
             const palletId = this.getAttribute('data-pallet-id');
-            const form = document.getElementById(`add-item-form-${palletId}`);
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            const folioId = this.getAttribute('data-folio-id');
+            const url = `add_item_form.php?pallet_id=${palletId}&folio_id=${folioId}`;
+            window.open(url, 'Agregar Item', 'width=600,height=400');
         });
     });
 
