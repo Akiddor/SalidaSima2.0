@@ -9,8 +9,8 @@ if (empty($pallet_ids)) {
     die('No se seleccionaron pallets para imprimir.');
 }
 
-// Verificar si el folio ya existe en la tabla pallets_impresos
-$check_folio_query = "SELECT COUNT(*) FROM pallets_impresos WHERE folio = '$folio'";
+// Verificar si el folio ya existe en la tabla folios_impresos
+$check_folio_query = "SELECT COUNT(*) FROM folios_impresos WHERE folio_id = (SELECT id FROM Folios WHERE folio_number = '$folio')";
 $result = mysqli_query($enlace, $check_folio_query);
 $count = mysqli_fetch_row($result)[0];
 
@@ -22,10 +22,25 @@ if ($count > 0) {
     exit;
 }
 
+// Obtener el ID del folio
+$folio_query = "SELECT id FROM Folios WHERE folio_number = '$folio'";
+$folio_result = mysqli_query($enlace, $folio_query);
+if ($folio_result && mysqli_num_rows($folio_result) > 0) {
+    $folio_row = mysqli_fetch_assoc($folio_result);
+    $folio_id = $folio_row['id'];
 
-// Insertar el folio en la tabla pallets_impresos
-$insert_folio_query = "INSERT INTO pallets_impresos (folio) VALUES ('$folio')";
-mysqli_query($enlace, $insert_folio_query);
+    // Insertar los pallets en la tabla folios_impresos
+    foreach ($pallet_ids as $pallet_id) {
+        $insert_query = "INSERT INTO folios_impresos (pallet_id, folio_id) VALUES ($pallet_id, $folio_id)";
+        mysqli_query($enlace, $insert_query);
+    }
+} else {
+    echo "<script>
+          alert('El número de folio ingresado no existe.');
+          window.location.href = 'index.php';
+          </script>";
+    exit;
+}
 
 ?>
 
@@ -34,87 +49,68 @@ mysqli_query($enlace, $insert_folio_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/pallets.css">
-    <title>Imprimir Pallets</title>
-    <style>
-        @media print {
-            .no-print {
-                display: none;
-            }
-            body {
-                font-family: Arial, sans-serif;
-                font-size: 14px;
-                margin: 0;
-                padding: 20px;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-            th, td {
-                border: 1px solid #000;
-                padding: 8px;
-                text-align: left;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-            .pallet-info {
-                margin-bottom: 20px;
-            }
-        }
-    </style>
+    <title>Packing Slip</title>
+    <link rel="stylesheet" href="css/print_pallet.css">
 </head>
 <body>
-    <div class="logo">
-        <img src="Simaaa.png" alt="Sima Solutions">
-    </div>
-    <h2><p>Folio: <?php echo htmlspecialchars($folio); ?></p></h2>
+    <div class="container">
+        <div class="header">
+            <img src="/img/Simaaa.png " alt="Logo">
+            <h1>PACKING SLIP</h1>
+        </div>
 
-    <?php
-    foreach ($pallet_ids as $pallet_id) {
-        $pallet_query = "SELECT * FROM pallets WHERE id = $pallet_id";
-        $pallet_result = mysqli_query($enlace, $pallet_query);
-        $pallet = mysqli_fetch_assoc($pallet_result);
+        <div class="company-info">
+            <p>Servicios Para La Industria Maquiladora</p>
+            <p>Calle José Gutiérrez #407</p>
+            <p>Col. Deportistas C.P. 31124</p>
+            <p>Chihuahua, Chihuahua México</p>
+        </div>
 
-        $items_query = "SELECT * FROM items_scanned WHERE pallet_id = $pallet_id";
-        $items_result = mysqli_query($enlace, $items_query);
-    ?>
-        <div class="pallet-info">
-            <h2>Pallet: <?php echo htmlspecialchars($pallet['pallet_name']); ?></h2>
-            <p>Fecha de creación: <?php echo date('d/m/Y H:i:s', strtotime($pallet['created_at'])); ?></p>
+        <div class="details">
+            <div>
+                <p><strong>Date:</strong> ____________</p>
+                <p><strong>Folio:</strong> ____________</p>
+                <p><strong>Hora:</strong> ____________</p>
+            </div>
+            <div>
+                <p><strong>Bill To:</strong></p>
+                <p>NIFCO</p>
+                <p>Nicolás Gogol #11301</p>
+                <p>Complejo Industrial</p>
+                <p>CP 31109 Chihuahua, Chih. México</p>
+            </div>
+        </div>
+
+        <div class="details">
+            <div>
+                <p><strong>Ship To:</strong></p>
+                <p>NIFCO</p>
+                <p>Nicolás Gogol #11301</p>
+                <p>Complejo Industrial</p>
+                <p>CP 31109 Chihuahua, Chih. México</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2>Pallet 1</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Número de Parte</th>
-                        <th>NIFCO</th>
-                        <th>Serial</th>
-                        <th>Cantidad</th>
-                        <th>Fecha</th>
+                        <th>Part Number</th>
+                        <th>Boxes</th>
+                        <th>Description</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($item = mysqli_fetch_assoc($items_result)): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($item['part_number']); ?></td>
-                        <td><?php echo htmlspecialchars($item['nifco_numero']); ?></td>
-                        <td><?php echo htmlspecialchars($item['serial_number']); ?></td>
-                        <td><?php echo htmlspecialchars($item['quantity']); ?></td>
-                        <td><?php echo htmlspecialchars($item['fecha_y_hora']); ?></td>
-                    </tr>
-                    <?php endwhile; ?>
+                    <!-- Add table rows dynamically -->
                 </tbody>
             </table>
         </div>
-        <hr>
-    <?php } ?>
 
-    <div class="buttons no-print">
-        <button onclick="window.print()">Imprimir</button>
-        <button onclick="window.close()">Cerrar</button>
+        <div class="no-print">
+            <button onclick="window.print()">Imprimir</button>
+        </div>
     </div>
 </body>
 </html>
-
-

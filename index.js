@@ -41,10 +41,24 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('print-selected-pallets').addEventListener('click', function () {
         const folio = prompt('Por favor ingrese el número de folio:');
         if (folio) {
-            const url = `print_pallets.php?pallets=${selectedPallets.join(',')}&folio=${folio}`;
-            window.open(url, '_blank');
+            // Verificar si el folio existe en la base de datos
+            fetch(`check_folio.php?folio=${folio}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        const url = `print_pallets.php?pallets=${selectedPallets.join(',')}&folio=${folio}`;
+                        window.open(url, '_blank');
+                    } else {
+                        alert('El número de folio ingresado no existe. Por favor, ingrese un número de folio válido.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al verificar el número de folio.');
+                });
         }
     });
+
 
     // Asociar eventos a los botones de eliminar registro
     document.querySelectorAll('.btneliminar').forEach(button => {
@@ -110,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = url;
         });
     });
-    
+
     // Asociar eventos a los botones de eliminar folio
     document.querySelectorAll('.btn-delete-folio').forEach(button => {
         button.addEventListener('click', function () {

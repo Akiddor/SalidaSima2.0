@@ -1,0 +1,134 @@
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            max-width: 120px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin: 10px 0 0;
+            color: #333;
+        }
+
+        .company-info {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+
+        .details div {
+            width: 48%;
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+        .details strong {
+            color: #333;
+        }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table thead {
+            background-color: #333;
+            color: #fff;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .no-print {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .no-print button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .no-print button:hover {
+            background-color: #555;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            .container {
+                border: none;
+                box-shadow: none;
+            }
+        }
