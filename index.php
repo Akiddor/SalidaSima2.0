@@ -131,28 +131,33 @@
                                                                     <th class="custom-th">NIFCO</th>
                                                                     <th class="custom-th">Serial</th>
                                                                     <th class="custom-th">Cantidad</th>
+                                                                    <th class="custom-th">Acciones</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <?php
-                                                                $itemsQuery = "SELECT * FROM Cajas_scanned WHERE pallet_id = " . $pallet['id'];
+                                                                $itemsQuery = "SELECT cs.*, m.numero_parte, m.nifco_numero FROM Cajas_scanned cs JOIN Modelos m ON cs.part_id = m.id WHERE cs.pallet_id = " . $pallet['id'];
                                                                 $itemsResult = mysqli_query($enlace, $itemsQuery);
 
                                                                 if ($itemsResult && mysqli_num_rows($itemsResult) > 0):
                                                                     while ($item = mysqli_fetch_assoc($itemsResult)):
                                                                         ?>
                                                                         <tr>
-                                                                            <td class="custom-td"><?php echo htmlspecialchars($item['part_number']); ?></td>
+                                                                            <td class="custom-td"><?php echo htmlspecialchars($item['numero_parte']); ?></td>
                                                                             <td class="custom-td"><?php echo htmlspecialchars($item['nifco_numero']); ?></td>
                                                                             <td class="custom-td"><?php echo htmlspecialchars($item['serial_number']); ?></td>
                                                                             <td class="custom-td"><?php echo htmlspecialchars($item['quantity']); ?></td>
+                                                                            <td class="custom-td">
+                                                                                <button class="btn-edit-item" data-item-id="<?php echo $item['id']; ?>">Editar</button>
+                                                                                <button class="btn-delete-item" data-item-id="<?php echo $item['id']; ?>">Eliminar</button>
+                                                                            </td>
                                                                         </tr>
                                                                         <?php
                                                                     endwhile;
                                                                 else:
                                                                     ?>
                                                                     <tr>
-                                                                        <td class="custom-td" colspan="4">No hay registros para este pallet.</td>
+                                                                        <td class="custom-td" colspan="5">No hay registros para este pallet.</td>
                                                                     </tr>
                                                                     <?php
                                                                 endif;
@@ -187,7 +192,6 @@
         <p class="no-dates-message">No hay registros de fechas disponibles.</p>
     <?php endif; ?>
 </div>
-
     <!-- Sección para imprimir pallets seleccionados -->
     <div id="print-selected-container" style="display: none;">
         <button id="print-selected-pallets" class="btn-print-selected">
