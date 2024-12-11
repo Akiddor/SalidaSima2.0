@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $quantity = preg_replace('/\D/', '', $quantity);
 
-        if (!is_numeric($quantity) || (int) $quantity <= 0) {
+        if (!is_numeric($quantity) || (int)$quantity <= 0) {
             $response['message'] = "Cantidad inválida. Por favor, ingrese un número válido.";
         } else {
-            $quantity = (int) $quantity;
+            $quantity = (int)$quantity;
 
             // Verificar si el número de serie ya existe en cualquier pallet
             $check_serial_query = "SELECT COUNT(*) as count FROM Cajas_scanned WHERE serial_number = '$serial_number'";

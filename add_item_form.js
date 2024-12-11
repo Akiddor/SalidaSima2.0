@@ -2,6 +2,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('addItemForm');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+
+        // Limpiar los valores escaneados
+        const partNumberInput = document.getElementById('part_number');
+        const serialNumberInput = document.getElementById('serial_number');
+        const quantityInput = document.getElementById('quantity');
+
+        partNumberInput.value = partNumberInput.value.replace(/^P/, '');
+        serialNumberInput.value = serialNumberInput.value.replace(/^1S/, '');
+        quantityInput.value = quantityInput.value.replace(/^Q/, '');
+
         const formData = new FormData(this);
 
         fetch('add_item.php', {
