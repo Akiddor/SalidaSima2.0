@@ -59,17 +59,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
-    // Asociar eventos a los botones de eliminar registro
-    document.querySelectorAll('.btneliminar').forEach(button => {
+     // Asociar eventos a los botones de eliminar item
+     document.querySelectorAll('.btn-delete-item').forEach(button => {
         button.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
+            const itemId = this.getAttribute('data-item-id');
             if (confirm('¿Estás seguro de que deseas eliminar este registro?')) {
-                fetch(`delete.php?id=${id}`)
+                fetch(`delete_item.php?id=${itemId}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            document.querySelector(`tr[data-id="${id}"]`).remove();
+                            document.querySelector(`tr[data-item-id="${itemId}"]`).remove();
+                            alert(data.message);
                         } else {
                             alert(data.message || 'Error al eliminar el registro.');
                         }
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-4
+
 
 
 function showNotification(message, type) {

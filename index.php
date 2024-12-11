@@ -130,23 +130,24 @@
                                                                     if ($itemsResult && mysqli_num_rows($itemsResult) > 0):
                                                                         while ($item = mysqli_fetch_assoc($itemsResult)):
                                                                             ?>
-                                                                            <tr>
-                                                                                <td class="custom-td">
-                                                                                    <?php echo htmlspecialchars($item['numero_parte']); ?>
-                                                                                </td>
-                                                                                <td class="custom-td">
-                                                                                    <?php echo htmlspecialchars($item['nifco_numero']); ?>
-                                                                                </td>
-                                                                                <td class="custom-td">
-                                                                                    <?php echo htmlspecialchars($item['serial_number']); ?>
-                                                                                </td>
-                                                                                <td class="custom-td"><?php echo htmlspecialchars($item['quantity']); ?>
-                                                                                </td>
-                                                                                <td class="custom-td">
-                                                                                <button class="btn-edit-item" data-item-id="<?php echo $item['id']; ?>">Editar</button>                                                                                    <button class="btn-delete-item"
-                                                                                        data-item-id="<?php echo $item['id']; ?>">Eliminar</button>
-                                                                                </td>
-                                                                            </tr>
+                                                                           <tr data-item-id="<?php echo $item['id']; ?>">
+    <td class="custom-td">
+        <?php echo htmlspecialchars($item['numero_parte']); ?>
+    </td>
+    <td class="custom-td">
+        <?php echo htmlspecialchars($item['nifco_numero']); ?>
+    </td>
+    <td class="custom-td">
+        <?php echo htmlspecialchars($item['serial_number']); ?>
+    </td>
+    <td class="custom-td">
+        <?php echo htmlspecialchars($item['quantity']); ?>
+    </td>
+    <td class="custom-td">
+        <button class="btn-edit-item" data-item-id="<?php echo $item['id']; ?>">Editar</button>
+        <button class="btn-delete-item" data-item-id="<?php echo $item['id']; ?>">Eliminar</button>
+    </td>
+</tr>   
                                                                             <?php
                                                                         endwhile;
                                                                     else:

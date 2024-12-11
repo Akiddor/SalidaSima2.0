@@ -25,34 +25,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $quantity = preg_replace('/\D/', '', $quantity);
 
-        if (!is_numeric($quantity) || (int)$quantity <= 0) {
+        if (!is_numeric($quantity) || (int) $quantity <= 0) {
             $response['message'] = "Cantidad inválida. Por favor, ingrese un número válido.";
         } else {
-            $quantity = (int)$quantity;
+            $quantity = (int) $quantity;
 
-            // Verificar si el pallet pertenece al folio correcto
-            $check_pallet_query = "SELECT * FROM Pallets WHERE id = $pallet_id AND folio_id = $folio_id";
-            $check_pallet_result = mysqli_query($enlace, $check_pallet_query);
-
-            if (mysqli_num_rows($check_pallet_result) == 0) {
-                $response['message'] = "El pallet no pertenece al folio especificado.";
+            // Verificar si el número de serie ya existe en cualquier pallet
+            $check_serial_query = "SELECT COUNT(*) as count FROM Cajas_scanned WHERE serial_number = '$serial_number'";
+            $check_serial_result = mysqli_query($enlace, $check_serial_query);
+            $serial_check = mysqli_fetch_assoc($check_serial_result);
+            if ($serial_check['count'] > 0) {
+                $response['message'] = "El número de serie ya existe en otro pallet. Por favor, utiliza un número de serie diferente.";
             } else {
-                // Verificar si el número de serie ya existe en el pallet
-                $check_serial_query = "SELECT COUNT(*) as count FROM Cajas_scanned WHERE serial_number = '$serial_number' AND pallet_id = $pallet_id";
-                $check_serial_result = mysqli_query($enlace, $check_serial_query);
-                $serial_check = mysqli_fetch_assoc($check_serial_result);
-                if ($serial_check['count'] > 0) {
-                    $response['message'] = "El número de serie ya existe en este pallet. Por favor, utiliza un número de serie diferente.";
+                // Insertar el registro en la tabla Cajas_scanned
+                $insert_query = "INSERT INTO Cajas_scanned (part_id, pallet_id, serial_number, quantity)
+                                 VALUES ($model_id, $pallet_id, '$serial_number', $quantity)";
+                if (mysqli_query($enlace, $insert_query)) {
+                    $response['success'] = true;
+                    $response['message'] = "Registro agregado exitosamente. NIFCO: $nifco_numero";
                 } else {
-                    // Insertar el registro en la tabla Cajas_scanned
-                    $insert_query = "INSERT INTO Cajas_scanned (part_id, pallet_id, serial_number, quantity)
-                                     VALUES ($model_id, $pallet_id, '$serial_number', $quantity)";
-                    if (mysqli_query($enlace, $insert_query)) {
-                        $response['success'] = true;
-                        $response['message'] = "Registro agregado exitosamente. NIFCO: $nifco_numero";
-                    } else {
-                        $response['message'] = "Error al agregar el registro: " . mysqli_error($enlace);
-                    }
+                    $response['message'] = "Error al agregar el registro: " . mysqli_error($enlace);
                 }
             }
         }

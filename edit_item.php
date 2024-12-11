@@ -15,16 +15,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $part_info = mysqli_fetch_assoc($part_result);
         $part_id = $part_info['id'];
 
-        $update_query = "UPDATE Cajas_scanned SET part_id = '$part_id', serial_number = '$serial_number', quantity = $quantity WHERE id = $id";
-        if (mysqli_query($enlace, $update_query)) {
-            $message = "Registro actualizado exitosamente.";
-            $messageType = 'success';
-            // Redirigir al usuario a index.php con el mensaje y el tipo de mensaje
-            header("Location: index.php?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
-            exit; // Terminar la ejecución del script después de la redirección
-        } else {
-            $message = "Error al actualizar el registro: " . mysqli_error($enlace);
+        // Verificar si el número de serie ya existe en cualquier otro registro
+        $check_serial_query = "SELECT COUNT(*) as count FROM Cajas_scanned WHERE serial_number = '$serial_number' AND id != $id";
+        $check_serial_result = mysqli_query($enlace, $check_serial_query);
+        $serial_check = mysqli_fetch_assoc($check_serial_result);
+        if ($serial_check['count'] > 0) {
+            $message = "El número de serie ya existe en otro registro. Por favor, utiliza un número de serie diferente.";
             $messageType = 'error';
+        } else {
+            $update_query = "UPDATE Cajas_scanned SET part_id = '$part_id', serial_number = '$serial_number', quantity = $quantity WHERE id = $id";
+            if (mysqli_query($enlace, $update_query)) {
+                $message = "Registro actualizado exitosamente.";
+                $messageType = 'success';
+                // Redirigir al usuario a index.php con el mensaje y el tipo de mensaje
+                header("Location: index.php?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
+                exit; // Terminar la ejecución del script después de la redirección
+            } else {
+                $message = "Error al actualizar el registro: " . mysqli_error($enlace);
+                $messageType = 'error';
+            }
         }
     } else {
         $message = "Número de parte no encontrado.";
