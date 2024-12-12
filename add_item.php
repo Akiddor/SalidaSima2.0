@@ -10,6 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pallet_id = mysqli_real_escape_string($enlace, $_POST['pallet_id']);
     $folio_id = mysqli_real_escape_string($enlace, $_POST['folio_id']);
 
+    // Limpiar los valores escaneados
+    $part_number = preg_replace('/^P/', '', $part_number);
+    $serial_number = preg_replace('/^1S/', '', $serial_number);
+    $quantity = preg_replace('/^Q/', '', $quantity);
+
+    // Eliminar espacios y guiones
+    $part_number = preg_replace('/[\s-]/', '', $part_number);
+    $serial_number = preg_replace('/[\s-]/', '', $serial_number);
+    $quantity = preg_replace('/[\s-]/', '', $quantity);
+
     // Buscar en tabla Modelos
     $search_model_query = "SELECT id, nifco_numero FROM Modelos WHERE 
         LOWER(numero_parte) = LOWER('$part_number') OR 
@@ -55,3 +65,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 echo json_encode($response);
 ?>
+

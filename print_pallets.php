@@ -1,5 +1,4 @@
 <?php
-
 require 'backend/db/db.php';
 
 $pallet_ids = isset($_GET['pallets']) ? explode(',', $_GET['pallets']) : [];
@@ -42,21 +41,41 @@ if ($folio_result && mysqli_num_rows($folio_result) > 0) {
     exit;
 }
 
+// Inicializar la variable $pallets como un array vacío
+$pallets = [];
+
+// Obtener los detalles de los pallets seleccionados
+foreach ($pallet_ids as $pallet_id) {
+    $query = "SELECT cs.*, m.numero_parte, m.nifco_numero FROM Cajas_scanned cs JOIN Modelos m ON cs.part_id = m.id WHERE cs.pallet_id = $pallet_id";
+    $result = mysqli_query($enlace, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $pallets[$pallet_id][] = $row;
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Packing Slip</title>
     <link rel="stylesheet" href="css/print_pallet.css">
+    <style>
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <img src="/img/Simaaa.png " alt="Logo">
-            <h1>PACKING SLIP</h1>
+            <h1>PACKING LIST</h1>
         </div>
 
         <div class="company-info">
@@ -92,20 +111,30 @@ if ($folio_result && mysqli_num_rows($folio_result) > 0) {
         </div>
 
         <div class="table-container">
-            <h2>Pallet 1</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Part Number</th>
-                        <th>Boxes</th>
-                        <th>Description</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Add table rows dynamically -->
-                </tbody>
-            </table>
+            <?php $pallet_counter = 1; ?>
+            <?php foreach ($pallets as $pallet_id => $items): ?>
+                <h2>Pallet <?php echo $pallet_counter++; ?></h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Part Number</th>
+                            <th>Nifco</th>
+                            <th>Serial</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($items as $pallet): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($pallet['numero_parte']); ?></td>
+                                <td><?php echo htmlspecialchars($pallet['nifco_numero'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($pallet['serial_number']); ?></td>
+                                <td><?php echo htmlspecialchars($pallet['quantity']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endforeach; ?>
         </div>
 
         <div class="no-print">
@@ -113,4 +142,5 @@ if ($folio_result && mysqli_num_rows($folio_result) > 0) {
         </div>
     </div>
 </body>
+
 </html>

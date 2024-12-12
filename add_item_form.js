@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const serialNumberInput = document.getElementById('serial_number');
         const quantityInput = document.getElementById('quantity');
 
-        partNumberInput.value = partNumberInput.value.replace(/^P/, '');
-        serialNumberInput.value = serialNumberInput.value.replace(/^1S/, '');
-        quantityInput.value = quantityInput.value.replace(/^Q/, '');
+        partNumberInput.value = partNumberInput.value.replace(/^P/, '').replace(/[\s-]/g, '');
+        serialNumberInput.value = serialNumberInput.value.replace(/^1S/, '').replace(/[\s-]/g, '');
+        quantityInput.value = quantityInput.value.replace(/^Q/, '').replace(/[\s-]/g, '');
 
         const formData = new FormData(this);
 

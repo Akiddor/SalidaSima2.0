@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
-    <link rel="icon" href="simafa.png" type="image/sima">
+    <link rel="icon" href="/img/simafa.png" type="image/sima">
 </head>
 
 <body>
