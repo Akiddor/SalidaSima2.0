@@ -8,22 +8,15 @@ $message = '';
 $messageType = '';
 
 /**
- * Función para mover registros antiguos a historial
+ * Función para archivar un día
  *
  * @param $enlace Enlace a la base de datos
+ * @param $day_date Fecha del día a archivar
  */
-function moveOldRecordsToHistory($enlace) {
-    // Asegurarse de que el folio_id exista en la tabla Folios antes de mover
-    $moveQuery = "INSERT INTO Historial (folio_id, pallet_id, created_at)
-                  SELECT p.folio_id, p.id, p.created_at
-                  FROM Pallets p
-                  JOIN Folios f ON p.folio_id = f.id
-                  WHERE p.created_at < NOW() - INTERVAL 5 DAY";
-    mysqli_query($enlace, $moveQuery);
-
-    // Eliminar los registros antiguos de la tabla Pallets
-    $deleteQuery = "DELETE FROM Pallets WHERE created_at < NOW() - INTERVAL 5 DAY";
-    mysqli_query($enlace, $deleteQuery);
+function archiveDay($enlace, $day_date) {
+    // Marcar el día como archivado en la tabla Days
+    $archiveDayQuery = "UPDATE Days SET status = 'archivado' WHERE day_date = '$day_date'";
+    mysqli_query($enlace, $archiveDayQuery);
 }
 
 // Crear día
@@ -38,7 +31,7 @@ if (isset($_POST['create_day'])) {
         $message = "Ya existe un registro para esta fecha: " . $day_date;
         $messageType = 'error';
     } else {
-        $create_day_query = "INSERT INTO Days (day_date) VALUES ('$day_date')";
+        $create_day_query = "INSERT INTO Days (day_date, status) VALUES ('$day_date', 'produccion')";
 
         if (mysqli_query($enlace, $create_day_query)) {
             $message = "Día creado exitosamente: " . $day_date;
@@ -50,7 +43,7 @@ if (isset($_POST['create_day'])) {
     }
 
     // Redirigir al usuario a la misma página con el mensaje correspondiente
-    header("Location: " . $_SERVER['PHP_SELF'] . "?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
+    header("Location: index.php?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
     exit;
 }
 
@@ -91,7 +84,7 @@ if (isset($_POST['create_folio'])) {
     }
 
     // Redirigir al usuario a la misma página con el mensaje correspondiente
-    header("Location: " . $_SERVER['PHP_SELF'] . "?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
+    header("Location: index.php?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
     exit;
 }
 
@@ -124,7 +117,20 @@ if (isset($_POST['create_pallet'])) {
     }
 
     // Redirigir al usuario a la misma página con el mensaje correspondiente
-    header("Location: " . $_SERVER['PHP_SELF'] . "?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
+    header("Location: index.php?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
+    exit;
+}
+
+// Archivar día manualmente
+if (isset($_POST['archive_day'])) {
+    $day_date = mysqli_real_escape_string($enlace, $_POST['archive_day']);
+    archiveDay($enlace, $day_date);
+
+    $message = "Día archivado exitosamente: " . $day_date;
+    $messageType = 'success';
+
+    // Redirigir al usuario a la misma página con el mensaje correspondiente
+    header("Location: index.php?message=" . urlencode($message) . "&messageType=" . urlencode($messageType));
     exit;
 }
 

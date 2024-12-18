@@ -1,5 +1,14 @@
-<?php include 'backindex.php'; ?>
+<?php
+require 'backend/db/db.php';
+require 'backindex.php';
 
+// Obtener las fechas de los días en producción ordenadas de los más recientes a los más antiguos
+$dateQuery = "SELECT day_date FROM Days WHERE status = 'produccion' ORDER BY day_date DESC";
+$dateResult = mysqli_query($enlace, $dateQuery);
+
+// Contar el número de días o acordeones
+$numDays = mysqli_num_rows($dateResult);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,17 +51,22 @@
 
     <!-- Sección de folios y pallets -->
     <div class="accordion custom-accordion">
-        <?php if (isset($dateResult) && mysqli_num_rows($dateResult) > 0): ?>
+        <p>Total de días/acordeones: <?php echo $numDays; ?></p>
+        <?php if ($numDays > 0): ?>
             <?php while ($dateRow = mysqli_fetch_assoc($dateResult)): ?>
                 <div class="accordion-item custom-accordion-item">
                     <div class="accordion-header custom-accordion-header">
-                        <h3><?php echo date("d/m/Y", strtotime($dateRow['pallet_date'])); ?></h3>
+                        <h3><?php echo date("d/m/Y", strtotime($dateRow['day_date'])); ?></h3>
+                        <form method="POST" action="backindex.php" style="display:inline;">
+                            <input type="hidden" name="archive_day" value="<?php echo $dateRow['day_date']; ?>">
+                            <button type="submit" class="btn-archive-day">Archivar Día</button>
+                        </form>
                     </div>
-                    <div class="accordion-body custom-accordion-body">
+                    <div class="accordion-body custom-accordion-body" style="display: none;">
                         <!-- Formulario para crear un nuevo folio -->
-                        <form id="createFolioForm-<?php echo $dateRow['pallet_date']; ?>" name="createFolioForm" method="POST"
+                        <form id="createFolioForm-<?php echo $dateRow['day_date']; ?>" name="createFolioForm" method="POST"
                             class="center-form">
-                            <input type="hidden" name="folio_date" value="<?php echo $dateRow['pallet_date']; ?>">
+                            <input type="hidden" name="folio_date" value="<?php echo $dateRow['day_date']; ?>">
                             <button type="submit" name="create_folio">
                                 <span>Crear Folio</span>
                             </button>
@@ -61,7 +75,7 @@
                         <!-- Sección de folios -->
                         <div class="accordion custom-accordion">
                             <?php
-                            $foliosQuery = "SELECT * FROM Folios WHERE DATE(departure_date) = '" . $dateRow['pallet_date'] . "' ORDER BY folio_number ASC";
+                            $foliosQuery = "SELECT * FROM Folios WHERE DATE(departure_date) = '" . $dateRow['day_date'] . "' ORDER BY folio_number ASC";
                             $foliosResult = mysqli_query($enlace, $foliosQuery);
 
                             if ($foliosResult && mysqli_num_rows($foliosResult) > 0):
@@ -75,11 +89,11 @@
                                                 <i class="fas fa-trash"></i> Eliminar Folio
                                             </button>
                                         </div>
-                                        <div class="accordion-body custom-accordion-body">
+                                        <div class="accordion-body custom-accordion-body" style="display: none;">
                                             <!-- Formulario para crear un nuevo pallet -->
                                             <form id="createPalletForm-<?php echo $folio['id']; ?>" name="createPalletForm"
                                                 method="POST" class="center-form">
-                                                <input type="hidden" name="pallet_date" value="<?php echo $dateRow['pallet_date']; ?>">
+                                                <input type="hidden" name="pallet_date" value="<?php echo $dateRow['day_date']; ?>">
                                                 <input type="hidden" name="folio_id" value="<?php echo $folio['id']; ?>">
                                                 <button type="submit" name="create_pallet">
                                                     <span>Crear Pallet</span>
