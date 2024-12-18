@@ -20,7 +20,7 @@
             <input type="text" id="serial_number" name="serial_number" required>
 
             <label for="quantity">Cantidad:</label>
-            <input type="number" id="quantity" name="quantity" required>
+            <input type="text" id="quantity" name="quantity" required>
 
             <button type="submit" name="registro">Registrar</button>
         </form>
