@@ -134,7 +134,7 @@ foreach ($pallet_ids as $pallet_id) {
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-            <?php endforeach; ?>
+            <?php endforeach; ?>     
         </div>
 
         <div class="no-print">

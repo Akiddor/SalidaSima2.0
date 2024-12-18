@@ -3,14 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        // Limpiar los valores escaneados
+        // Limpiar y convertir los valores escaneados a mayúsculas
         const partNumberInput = document.getElementById('part_number');
         const serialNumberInput = document.getElementById('serial_number');
         const quantityInput = document.getElementById('quantity');
 
-        partNumberInput.value = partNumberInput.value.replace(/^P/, '').replace(/[\s-]/g, '');
-        serialNumberInput.value = serialNumberInput.value.replace(/^1S/, '').replace(/[\s-]/g, '');
-        quantityInput.value = quantityInput.value.replace(/^Q/, '').replace(/[\s-]/g, '');
+        partNumberInput.value = partNumberInput.value.replace(/^P/, '').replace(/[\s-]/g, '').toUpperCase();
+        serialNumberInput.value = serialNumberInput.value.replace(/^1S/, '').replace(/[\s-]/g, '').toUpperCase();
+        quantityInput.value = quantityInput.value.replace(/^Q/, '').replace(/[\s-]/g, '').toUpperCase();
 
         const formData = new FormData(this);
 

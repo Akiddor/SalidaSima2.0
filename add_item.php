@@ -4,9 +4,9 @@ require 'backend/db/db.php';
 $response = ['success' => false, 'message' => ''];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $part_number = mysqli_real_escape_string($enlace, $_POST['part_number']);
-    $serial_number = mysqli_real_escape_string($enlace, $_POST['serial_number']);
-    $quantity = mysqli_real_escape_string($enlace, $_POST['quantity']);
+    $part_number = strtoupper(mysqli_real_escape_string($enlace, $_POST['part_number']));
+    $serial_number = strtoupper(mysqli_real_escape_string($enlace, $_POST['serial_number']));
+    $quantity = strtoupper(mysqli_real_escape_string($enlace, $_POST['quantity']));
     $pallet_id = mysqli_real_escape_string($enlace, $_POST['pallet_id']);
     $folio_id = mysqli_real_escape_string($enlace, $_POST['folio_id']);
 
@@ -65,4 +65,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 echo json_encode($response);
 ?>
-
