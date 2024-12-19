@@ -55,6 +55,7 @@ foreach ($pallet_ids as $pallet_id) {
         <header class="header">
             <div class="left">
                 <img src="/img/Simaaa.png" alt="Logo">
+                <div class="separator"></div>
                 <div class="company-info">
                     <p>Servicios Para La Industria Maquiladora</p>
                     <p>Calle José Gutiérrez #407</p>
@@ -110,6 +111,17 @@ foreach ($pallet_ids as $pallet_id) {
                 </table>
             <?php endforeach; ?>     
         </section>
+
+        <div class="signatures">
+            <div class="signature">
+                <div class="line"></div>
+                <p>Entregó:</p>
+            </div>
+            <div class="signature">
+                <div class="line"></div>
+                <p>Recibió:</p>
+            </div>
+        </div>
 
         <div class="no-print">
             <button onclick="window.print()">Imprimir</button>
