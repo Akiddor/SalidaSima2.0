@@ -1,134 +1,186 @@
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+/* Estilos generales para el cuerpo del documento */
+body {
+    font-family: 'Arial', sans-serif; /* Fuente del documento */
+    margin: 0; /* Eliminar márgenes */
+    padding: 0; /* Eliminar relleno */
+    background-color: #f4f4f4; /* Color de fondo */
+    color: #333; /* Color del texto */
+}
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            padding: 20px;
-        }
+/* Contenedor principal */
+.container {
+    max-width: 700px; /* Ancho máximo del contenedor reducido */
+    margin: 10px auto; /* Centrar el contenedor horizontalmente y reducir margen superior/inferior */
+    background: #fff; /* Color de fondo del contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra del contenedor */
+    overflow: hidden; /* Ocultar contenido desbordado */
+    padding: 15px; /* Relleno interno reducido */
+    position: relative; /* Posicionamiento relativo */
+}
 
-        .header {
-            text-align: center;
-            border-bottom: 2px solid #333;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
+/* Encabezado del documento */
+.header {
+    display: flex; /* Usar flexbox para el diseño */
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: flex-start; /* Alinear elementos al inicio */
+    border-bottom: 2px solid #333; /* Línea inferior */
+    padding-bottom: 15px; /* Relleno inferior reducido */
+    margin-bottom: 15px; /* Margen inferior reducido */
+}
 
-        .header img {
-            max-width: 120px;
-        }
+/* Estilo para la sección izquierda del encabezado */
+.header .left {
+    text-align: center; /* Alinear texto al centro */
+}
 
-        .header h1 {
-            font-size: 28px;
-            margin: 10px 0 0;
-            color: #333;
-        }
+/* Estilo para la sección derecha del encabezado */
+.header .right {
+    text-align: center; /* Alinear texto al centro */
+}
 
-        .company-info {
-            text-align: center;
-            margin: 10px 0;
-            font-size: 14px;
-        }
+/* Estilo para la imagen del logo */
+.header img {
+    max-width: 50px; /* Ancho máximo de la imagen reducido */
+}
 
-        .details {
-            display: flex;
-            justify-content: space-between;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            background-color: #fafafa;
-        }
+/* Información de la empresa */
+.company-info {
+    text-align: center; /* Alinear texto al centro */
+    margin: 5px 0; /* Margen superior e inferior reducido */
+    font-size: 12px; /* Tamaño de fuente reducido */
+}
 
-        .details div {
-            width: 48%;
-        }
+/* Detalles de facturación y envío */
+.details {
+    display: flex; /* Usar flexbox para el diseño */
+    justify-content: space-between; /* Espacio entre los elementos */
+    border: 1px solid #ddd; /* Borde */
+    padding: 10px; /* Relleno interno reducido */
+    border-radius: 6px; /* Bordes redondeados */
+    margin-bottom: 15px; /* Margen inferior reducido */
+    background-color: #fafafa; /* Color de fondo */
+}
 
-        .details p {
-            margin: 5px 0;
-        }
+/* Estilo para las secciones de facturación y envío */
+.details .bill-to,
+.details .ship-to {
+    width: 48%; /* Ancho del 48% */
+}
 
-        .details strong {
-            color: #333;
-        }
+/* Estilo para los párrafos dentro de los detalles */
+.details p {
+    margin: 3px 0; /* Margen superior e inferior reducido */
+}
 
-        .table-container {
-            margin-top: 20px;
-        }
+/* Estilo para el texto en negrita dentro de los detalles */
+.details strong {
+    color: #333; /* Color del texto */
+}
 
-        h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #444;
-        }
+/* Contenedor de la tabla */
+.table-container {
+    margin-top: 15px; /* Margen superior reducido */
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+/* Estilo para los encabezados de las tablas */
+h2 {
+    font-size: 18px; /* Tamaño de fuente reducido */
+    margin-bottom: 8px; /* Margen inferior reducido */
+    color: #444; /* Color del texto */
+}
 
-        table thead {
-            background-color: #333;
-            color: #fff;
-        }
+/* Estilo para las tablas */
+table {
+    width: 100%; /* Ancho completo */
+    border-collapse: collapse; /* Colapsar bordes */
+    margin-bottom: 15px; /* Margen inferior reducido */
+}
 
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-        }
+/* Estilo para los encabezados de las tablas */
+table thead {
+    background-color: #333; /* Color de fondo */
+    color: #fff; /* Color del texto */
+}
 
-        th,
-        td {
-            padding: 12px;
-            text-align: center;
-        }
+/* Estilo para las celdas de las tablas */
+table,
+th,
+td {
+    border: 1px solid #ddd; /* Borde */
+}
 
-        th {
-            font-weight: bold;
-        }
+/* Estilo para las celdas de las tablas */
+th,
+td {
+    padding: 8px; /* Relleno interno reducido */
+    text-align: center; /* Alinear texto al centro */
+}
 
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+/* Estilo para los encabezados de las tablas */
+th {
+    font-weight: bold; /* Negrita */
+}
 
-        .no-print {
-            text-align: center;
-            margin-top: 20px;
-        }
+/* Estilo para las filas pares de las tablas */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color de fondo */
+}
 
-        .no-print button {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+/* Estilo para el botón de impresión */
+.no-print {
+    text-align: center; /* Alinear texto al centro */
+    margin-top: 15px; /* Margen superior reducido */
+}
 
-        .no-print button:hover {
-            background-color: #555;
-        }
+/* Estilo para el botón de impresión */
+.no-print button {
+    background-color: #333; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 8px 15px; /* Relleno interno reducido */
+    border-radius: 6px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente reducido */
+    cursor: pointer; /* Cursor de puntero */
+    transition: background-color 0.3s ease; /* Transición de color de fondo */
+}
 
-        @media print {
-            .no-print {
-                display: none;
-            }
+/* Estilo para el botón de impresión al pasar el ratón */
+.no-print button:hover {
+    background-color: #555; /* Color de fondo */
+}
 
-            .container {
-                border: none;
-                box-shadow: none;
-            }
-        }
+/* Estilos específicos para la impresión */
+@media print {
+    body {
+        -webkit-print-color-adjust: exact; /* Ajuste de color para impresión en WebKit */
+        print-color-adjust: exact; /* Ajuste de color para impresión */
+    }
+
+    .no-print {
+        display: none; /* Ocultar elementos con la clase no-print */
+    }
+
+    .container {
+        border: none; /* Sin borde */
+        box-shadow: none; /* Sin sombra */
+    }
+
+    .header {
+        border-bottom: 2px solid #000; /* Línea inferior */
+    }
+
+    table thead {
+        background-color: #000 !important; /* Color de fondo */
+        color: #fff !important; /* Color del texto */
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #e0e0e0 !important; /* Color de fondo */
+    }
+
+    .details {
+        border: 1px solid #000; /* Borde */
+        background-color: #f0f0f0; /* Color de fondo */
+    }
+}
