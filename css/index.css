@@ -8,6 +8,41 @@ body {
   color: #333;
 }
 
+/* Header Styling */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 2em; /* Aumentar el padding para más espacio */
+  background-color: #fdfdfd; /* Cambiar el color de fondo */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+  text-decoration: none;
+  color: #0f4cae; /* Cambiar el color del texto a blanco */
+  font-size: 1.3em; /* Reducir un poco el tamaño de la fuente */
+  margin: 0 1em; /* Añadir margen entre los enlaces */
+  transition: color 0.3s ease; /* Transición suave para el color */
+}
+
+header a:hover {
+  color: #bb1212; /* Cambiar el color al pasar el ratón */
+}
+
+header .home-icon {
+  margin-right: auto;
+}
+
+header .history-icon {
+  margin-left: auto;
+}
+
+nav {
+  display: flex;
+  gap: 1em; /* Espacio entre los enlaces */
+}
+
 /* Form Styling */
 .center-form {
   display: flex;
@@ -50,30 +85,6 @@ body {
 
 .center-form button span {
   font-size: 1.2em;
-}
-
-/* Header Styling */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-header a {
-  text-decoration: none;
-  color: #007bff;
-  font-size: 1.5em;
-}
-
-header .home-icon {
-  margin-right: auto;
-}
-
-header .history-icon {
-  margin-left: auto;
 }
 
 /* Heading Styling */

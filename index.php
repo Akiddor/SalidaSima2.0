@@ -25,11 +25,17 @@ $numDays = mysqli_num_rows($dateResult);
 </head>
 
 <body>
-    <header>
-        <!-- Enlaces a la página de inicio y al historial -->
-        <a href="index.php" class="home-icon"><i class="fas fa-home"></i></a>
+    
+<header>
+    <!-- Enlaces a la página de inicio y al historial -->
+    <a href="index.php" class="home-icon"><i class="fas fa-home"></i></a>
+    <nav>
+        <a href="add_modelo.php">Agregar Numero de parte</a>
+        <a href="add_componentes.php">Agregar Componente</a>
         <a href="historial.php" class="history-icon"><i class="fas fa-history"></i> Historial</a>
-    </header>
+    </nav>
+</header>
+
     <h1>Registro Salidas SimaSolution</h1>
 
     <!-- Mostrar mensaje de éxito o error si está presente -->
