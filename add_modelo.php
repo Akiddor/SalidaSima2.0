@@ -40,13 +40,11 @@ $modelosResult = mysqli_query($enlace, $modelosQuery);
         <!-- Enlaces a la página de inicio y al historial -->
         <a href="index.php" class="home-icon"><i class="fas fa-home"></i></a>
         <nav>
-            <a href="add_modelo.php">Agregar Numero de parte</a>
-            <a href="add_componentes.php">Agregar Componente</a>
-            <a href="historial.php" class="history-icon"><i class="fas fa-history"></i> Historial</a>
+           
         </nav>
     </header>
     <main>
-        <h1>Modelos</h1>
+        <h1>Numeros de parte</h1>
         <?php if (isset($_GET['message'])): ?>
             <div class="notification <?php echo strpos($_GET['message'], 'exitosamente') !== false ? 'success' : 'error'; ?>">
                 <?php echo htmlspecialchars($_GET['message']); ?>
@@ -60,9 +58,9 @@ $modelosResult = mysqli_query($enlace, $modelosQuery);
             <label for="numero_parte">Número de Parte:</label>
             <input type="text" id="numero_parte" name="numero_parte" required>
             
-            <button type="submit"><i class="fas fa-plus"></i> Agregar Modelo</button>
+            <button type="submit"><i class="fas fa-plus"></i> Agregar Numero</button>
         </form>
-        <h2>Lista de Modelos</h2>
+        <h2>Lista de Numeros de parte</h2>
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
@@ -71,7 +69,7 @@ $modelosResult = mysqli_query($enlace, $modelosQuery);
                         <tr>
                             <th data-field="nifco_numero" class="custom-th">NIFCO Número</th>
                             <th data-field="numero_parte" class="custom-th">Número de Parte</th>
-                            <th data-field="acciones" class="custom-th">Acciones</th>
+                            <th data-field="acciones" class="custom-th">Nifco & Numero de parte</th>
                         </tr>
                     </thead>
                     <tbody>
